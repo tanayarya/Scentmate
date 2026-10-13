@@ -1,0 +1,53 @@
+SEED_FRAGRANCES = [
+  {"name":"9 PM Original","brand":"Afnan","format":"spray","family_tags":["amber","gourmand"],"character_tags":["sweet","warm"],"profile_confidence":"user-confirmed","is_favorite":True,"user_feedback":"love","notes":"Sweet / fruity / vanilla / amber. Strongly liked."},
+  {"name":"Paris Blue (B-L-U)","brand":"Paris Bleu (confirm exact brand/variant)","format":"spray","family_tags":[],"character_tags":[],"profile_confidence":"unknown","notes":"Profile needs confirmation; excellent longevity reported."},
+  {"name":"Acqua di Combo","brand":"Alvaro Navarro","format":"spray","family_tags":["aquatic","aromatic"],"character_tags":["fresh","clean"],"profile_confidence":"user-confirmed","is_favorite":True,"user_feedback":"love","notes":"Acqua di Giò-style clone; fresh/aquatic. Notes to confirm."},
+  {"name":"Odd Father (possibly Godfather)","brand":"Beardo","format":"spray","family_tags":[],"character_tags":[],"profile_confidence":"unknown","notes":"Exact name/profile needs confirmation; decent longevity reported."},
+  {"name":"Whisky Smoke","brand":"Beardo","format":"spray","family_tags":["woody","smoky"],"character_tags":["dark","warm"],"profile_confidence":"inferred","is_favorite":True,"user_feedback":"love","notes":"Smoky/woody direction to verify; liked."},
+  {"name":"Whisky Smoke Bourbon","brand":"Beardo","format":"spray","family_tags":["woody","amber"],"character_tags":["warm","dark"],"profile_confidence":"inferred","is_favorite":True,"user_feedback":"love","notes":"Boozy/woody direction to verify; liked."},
+  {"name":"9.0","brand":"Zara","format":"spray","family_tags":[],"character_tags":[],"profile_confidence":"unknown","notes":"Exact product/variant needs confirmation."},
+  {"name":"Edge","brand":"Wild Stone","format":"spray","family_tags":[],"character_tags":["fresh"],"profile_confidence":"user-confirmed","user_feedback":"good","notes":"Fresh profile; liked smell. Performance is not tracked in-app."},
+  {"name":"Mariner","brand":"Beardo","format":"spray","family_tags":["aquatic"],"character_tags":["fresh"],"profile_confidence":"user-confirmed","is_favorite":True,"user_feedback":"love","notes":"Fresh/aquatic; really liked."},
+  {"name":"Trump","brand":"The Man Company","format":"spray","family_tags":[],"character_tags":[],"profile_confidence":"unknown","user_feedback":"okay","notes":"Exact profile needs confirmation; rated okay-ish."},
+  {"name":"Cool Water","brand":"Davidoff","format":"spray","family_tags":["aquatic","aromatic"],"character_tags":["fresh"],"profile_confidence":"user-confirmed","notes":"Aquatic/aromatic."},
+  {"name":"Classic Black","brand":"Jaguar","format":"spray","family_tags":["woody","aromatic"],"character_tags":["clean"],"profile_confidence":"user-confirmed","is_favorite":True,"user_feedback":"love","notes":"Woody/aromatic; really liked."},
+  {"name":"Contemporary","brand":"Police","format":"spray","family_tags":[],"character_tags":[],"profile_confidence":"unknown","user_feedback":"good","notes":"Exact variant/profile needs confirmation."},
+  {"name":"Icon","brand":"Police","format":"spray","family_tags":[],"character_tags":[],"profile_confidence":"unknown","user_feedback":"good","notes":"Exact variant/profile needs confirmation."},
+  {"name":"Maverick","brand":"Beardo","format":"spray","family_tags":[],"character_tags":[],"profile_confidence":"unknown","user_feedback":"okay","notes":"Exact profile needs confirmation; smell fine."},
+  {"name":"To Be (blue skull bottle)","brand":"Police","format":"spray","family_tags":[],"character_tags":[],"profile_confidence":"unknown","is_favorite":True,"user_feedback":"love","notes":"Exact variant should be verified from image; profile liked."},
+  {"name":"Denim","brand":"Denim (exact attar maker/variant unknown)","format":"attar","family_tags":[],"character_tags":[],"profile_confidence":"unknown","user_feedback":"love","notes":"Traditional masculine profile unknown; very good."},
+  {"name":"Arabiyat (name as provided; exact product unknown)","brand":"Arabiyat","format":"attar","family_tags":[],"character_tags":[],"profile_confidence":"unknown","notes":"Exact product/profile needs confirmation."},
+  {"name":"Intense Oud (exact label uncertain)","brand":"Arabiyat / House of Arabiyat (confirm)","format":"attar","family_tags":["oud","woody"],"character_tags":[],"profile_confidence":"inferred","notes":"Oud/woody provisional classification only."},
+  {"name":"Choco Musk","brand":"Al Rehab","format":"attar","family_tags":["gourmand","amber"],"character_tags":["sweet","warm"],"profile_confidence":"user-confirmed","is_favorite":True,"user_feedback":"love","notes":"Chocolate/vanilla gourmand; strongly liked."},
+  {"name":"Zidan / Zadar (uncertain spelling)","brand":"Al Rehab","format":"attar","family_tags":[],"character_tags":[],"profile_confidence":"unknown","notes":"Identity needs confirmation; do not assume a product."},
+  {"name":"Dakar","brand":"Al Rehab","format":"attar","family_tags":["aromatic","woody"],"character_tags":["fresh"],"profile_confidence":"inferred","is_favorite":True,"user_feedback":"love","notes":"Aromatic/woody masculine provisional profile; strongly liked."},
+  {"name":"Seven Seas","brand":"Aroma (Aroma Attar)","format":"attar","family_tags":[],"character_tags":[],"profile_confidence":"unknown","notes":"Exact product/profile needs confirmation."},
+  {"name":"Seven Black (name uncertain)","brand":"Aroma (Aroma Attar)","format":"attar","family_tags":[],"character_tags":[],"profile_confidence":"unknown","notes":"Exact product/profile needs confirmation."},
+  {"name":"Lust","brand":"Alternate Scents","format":"spray","family_tags":["aquatic","aromatic"],"character_tags":["fresh","bold"],"profile_confidence":"user-confirmed","user_feedback":"good","notes":"Rasasi Hawas-inspired; likes profile/value. Alcohol-heavy opening reported."}
+]
+
+# Small, transparent scent profiles used only to generate suggestions. These are
+# intentionally broad accord families, not a claim that every listed note is exact.
+# A profile marked "inferred" remains editable if the owner wants to refine it.
+CURATED_PROFILES = {
+  "Paris Blue (B-L-U)": (["citrus", "aquatic"], ["fresh", "clean"]),
+  "Godfather": (["woody", "amber", "spicy"], ["warm", "bold"]),
+  "Whisky Smoke": (["woody", "smoky", "amber"], ["warm", "dark"]),
+  "Whisky Smoke Bourbon": (["woody", "leather", "spicy"], ["warm", "bold"]),
+  "9.0": (["woody", "vanilla", "aromatic"], ["warm", "soft"]),
+  "Edge": (["citrus", "aromatic"], ["fresh", "clean"]),
+  "Mariner": (["aquatic", "aromatic"], ["fresh", "clean"]),
+  "Trump": (["woody", "aromatic"], ["fresh", "clean"]),
+  "Classic Black": (["woody", "aromatic", "spicy"], ["clean", "warm"]),
+  "Contemporary": (["citrus", "woody"], ["fresh", "clean"]),
+  "Icon": (["woody", "spicy"], ["warm", "bold"]),
+  "Maverick": (["citrus", "woody"], ["fresh", "clean"]),
+  "To Be": (["woody", "aromatic"], ["fresh", "bold"]),
+  "Denim": (["woody", "musk"], ["warm", "soft"]),
+  "Intense Oud": (["oud", "woody", "amber"], ["warm", "dark"]),
+  "Ziden": (["musk", "amber"], ["warm", "soft"]),
+  "Dakar": (["aromatic", "woody", "musk"], ["fresh", "clean"]),
+  "Seven Seas": (["aquatic", "citrus"], ["fresh", "clean"]),
+  "555": (["woody", "musk"], ["warm", "soft"]),
+  "Cool Water": (["aquatic", "aromatic", "woody"], ["fresh", "clean"]),
+}

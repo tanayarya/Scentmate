@@ -1,0 +1,19 @@
+services:
+  scentmate:
+    build: .
+    container_name: scentmate
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:8787:8000"
+    environment:
+      DATABASE_URL: sqlite:////app/data/scentmate.db
+      DATA_DIR: /app/data
+      IMAGE_DIR: /app/images/bottles
+    volumes:
+      - ./data:/app/data
+      - ./images:/app/images
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/api/health')"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
