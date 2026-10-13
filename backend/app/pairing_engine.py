@@ -82,8 +82,22 @@ def candidate(main: dict[str, Any], pair: dict[str, Any], occasion: str, feedbac
     base=min(35, 16+len(matches)*6+distinctness); occasion_points=occasion_score(main,pair,occasion)
     preference=6 if main.get("is_favorite") or pair.get("is_favorite") else 0
     feedback_points=20 if feedback in {"loved","good"} else 0
-    evidence="liked" if feedback in {"loved","good"} else ("confirmed" if main.get("profile_confidence")==pair.get("profile_confidence")=="user-confirmed" else "new")
-    return {"main":main,"pair":pair,"mode":best["mode"],"score":base+occasion_points+preference+feedback_points,"rules":matches,"explanation":best["why"],"evidence":evidence,"occasion":occasion}
+    confirmed = sum(
+        item.get("profile_confidence") == "user-confirmed" for item in (main, pair)
+    )
+    # A confirmed profile is still ranked alongside a useful inferred profile,
+    # but wins a close decision because its inputs are more trustworthy.
+    confidence_points = {0: 0, 1: 5, 2: 12}[confirmed]
+    profile_state = "confirmed" if confirmed == 2 else ("mixed" if confirmed else "inferred")
+    profile_note = (
+        " Both scent profiles are confirmed by you."
+        if profile_state == "confirmed"
+        else " One scent profile is suggested; refine it to make this more personal."
+        if profile_state == "mixed"
+        else " These scent profiles are suggested; refine them to make this more personal."
+    )
+    evidence="liked" if feedback in {"loved","good"} else ("confirmed" if profile_state == "confirmed" else "suggested")
+    return {"main":main,"pair":pair,"mode":best["mode"],"score":base+occasion_points+preference+feedback_points+confidence_points,"rules":matches,"explanation":best["why"]+profile_note,"evidence":evidence,"profile_state":profile_state,"occasion":occasion}
 
 def recommendations(fragrances:list[dict[str,Any]], occasion:str, main_id:Optional[int]=None, mode:Optional[str]=None, feedback_by_pair:Optional[dict[tuple[int,int],str]]=None, recent_pairs:Optional[set[tuple[int,int]]]=None)->list[dict[str,Any]]:
     feedback_by_pair=feedback_by_pair or {}; recent_pairs=recent_pairs or set(); results=[]

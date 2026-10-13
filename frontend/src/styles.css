@@ -1,15 +1,15 @@
 @import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap");
 :root {
   font-family: "Plus Jakarta Sans", sans-serif;
-  color: #202d24;
-  background: #f4f2eb;
+  color: #1f2c24;
+  background: #fff;
 }
 * {
   box-sizing: border-box;
 }
 body {
   margin: 0;
-  background: radial-gradient(circle at 77% 0, #fbf4e6, #f4f2eb 48%, #eee);
+  background: #fff;
 }
 button,
 input,
@@ -29,7 +29,7 @@ header {
   height: 70px;
   display: flex;
   align-items: center;
-  border-bottom: 1px solid #dde1d8;
+  border-bottom: 1px solid #e6e9e5;
 }
 .header-actions {
   display: flex;
@@ -63,11 +63,11 @@ header {
   border-radius: 8px;
   padding: 10px 14px;
   background: transparent;
-  color: #68766b;
+  color: #708076;
   font-size: 12px;
 }
 .topnav .current {
-  background: #e2eadf;
+  background: #eff5f0;
   color: #315946;
   font-weight: 700;
 }
@@ -75,13 +75,13 @@ header {
   display: flex;
   gap: 6px;
   align-items: center;
-  color: #52715a;
+  color: #4a6955;
   font-weight: 700;
   font-size: 11px;
 }
 .weather svg {
   width: 20px;
-  color: #cc9a52;
+  color: #7da18b;
 }
 .hero {
   display: grid;
@@ -97,7 +97,7 @@ header {
   font-size: 10px;
   font-weight: 700;
   letter-spacing: 1.6px;
-  color: #899386;
+  color: #929b93;
   margin: 0 0 12px;
 }
 h1,
@@ -115,7 +115,7 @@ p {
 }
 .hero > p:not(.eyebrow) {
   max-width: 600px;
-  color: #647064;
+  color: #68746b;
   font-size: 14px;
   line-height: 1.7;
 }
@@ -132,17 +132,17 @@ p {
   align-items: center;
   justify-content: center;
   gap: 7px;
-  border: 1px solid #d7ddd4;
+  border: 1px solid #e1e5e0;
   border-radius: 9px;
-  background: #fafbf8;
+  background: #fff;
   color: #566558;
   font-size: 11px;
   transition: border-color 160ms ease, background 160ms ease,
     transform 160ms ease;
 }
 .occasion-grid button:hover {
-  border-color: #a6b7a6;
-  background: #f3f6f1;
+  border-color: #b5c4b7;
+  background: #f8faf8;
   transform: translateY(-1px);
 }
 .occasion-grid button svg {
@@ -168,7 +168,7 @@ p {
   height: 58px;
   bottom: 84px;
   border-radius: 50%;
-  background: #dae4d8;
+  background: #e8eee9;
   filter: blur(16px);
 }
 .stage-bottle {
@@ -209,8 +209,8 @@ p {
 .occasion-grid .selected,
 .intent-grid .selected,
 .pick-grid .selected {
-  border-color: #345d49;
-  background: #345d49;
+  border-color: #315947;
+  background: #315947;
   color: #fff;
   font-weight: 700;
 }
@@ -231,7 +231,7 @@ p {
 .link {
   border: 0;
   background: none;
-  color: #39634d;
+  color: #315947;
   font-size: 11px;
   font-weight: 700;
 }
@@ -247,12 +247,12 @@ p {
   align-items: center;
   gap: 24px;
   padding: 25px 31px;
-  border: 1px solid #dbe1d8;
+  border: 1px solid #e2e6e1;
   border-radius: 18px;
-  background: #fbfbf9;
+  background: #fff;
 }
 .single:nth-child(2) {
-  background: #e5ece0;
+  background: #f5f8f5;
 }
 .bottle {
   display: grid;
@@ -318,16 +318,16 @@ p {
 }
 .primary {
   border: 0;
-  background: #315947;
+  background: #294e3d;
   color: #fff;
 }
 .secondary {
-  border: 1px solid #cbd5ca;
+  border: 1px solid #dce3dc;
   background: #fff;
-  color: #42624d;
+  color: #3f604c;
 }
 .secondary:disabled {
-  background: #e7ece4;
+  background: #f0f3ef;
   color: #65806c;
 }
 .primary svg,
@@ -340,8 +340,8 @@ p {
   align-items: center;
   margin-top: 44px;
   padding: 23px 25px;
-  border-top: 1px solid #d9ded4;
-  border-bottom: 1px solid #d9ded4;
+  border-top: 1px solid #e5e8e4;
+  border-bottom: 1px solid #e5e8e4;
 }
 .home-pairings {
   margin-top: 22px;
@@ -354,9 +354,9 @@ p {
   display: grid;
   grid-template-columns: 45% 55%;
   overflow: hidden;
-  border: 1px solid #dce2d9;
+  border: 1px solid #e1e5e0;
   border-radius: 17px;
-  background: #fbfbf9;
+  background: #fff;
 }
 .pair-art {
   display: flex;
@@ -364,7 +364,7 @@ p {
   justify-content: center;
   gap: 11px;
   padding: 24px;
-  background: #f3f3f1;
+  background: #f6f7f5;
 }
 .pair-art .bottle:last-child:not(.photo) {
   background: linear-gradient(145deg, #d5e2d2, #8ea890);
@@ -389,7 +389,7 @@ p {
 }
 .pair-copy small {
   font-size: 9px;
-  color: #54715b;
+  color: #5b7864;
   text-transform: uppercase;
   letter-spacing: 1px;
   font-weight: 700;
@@ -401,7 +401,7 @@ p {
 }
 .pair-copy p {
   margin-bottom: 15px;
-  color: #657167;
+  color: #69756c;
   font-size: 11px;
   line-height: 1.6;
 }
@@ -421,18 +421,24 @@ p {
   gap: 8px;
   width: 310px;
   padding: 10px 13px;
-  border: 1px solid #d8ded5;
+  border: 1px solid #e0e5df;
   border-radius: 9px;
-  background: #fbfbf9;
+  background: #fff;
 }
 .collection-actions {
   display: flex;
   align-items: center;
   gap: 11px;
 }
+.review-profiles {
+  white-space: nowrap;
+}
+.review-profiles svg {
+  width: 14px;
+}
 .search svg {
   width: 16px;
-  color: #809084;
+  color: #809087;
 }
 .search input {
   width: 100%;
@@ -452,9 +458,9 @@ p {
   flex-direction: column;
   min-height: 375px;
   padding: 16px;
-  border: 1px solid #dce2d9;
+  border: 1px solid #e1e5e0;
   border-radius: 15px;
-  background: #fbfbf9;
+  background: #fff;
 }
 .collection-card .bottle.big {
   width: 100%;
@@ -467,7 +473,7 @@ p {
 }
 .collection-card p {
   margin: 0 0 4px;
-  color: #7b887c;
+  color: #7d897f;
   font-size: 10px;
 }
 .collection-card h2 {
@@ -480,6 +486,21 @@ p {
   color: #839084;
   text-transform: uppercase;
   letter-spacing: 1px;
+}
+.profile-link {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 8px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #617c68;
+  font-size: 9px;
+  font-weight: 700;
+}
+.profile-link svg {
+  width: 12px;
 }
 .manage {
   display: flex;
@@ -496,15 +517,15 @@ p {
   border: 0;
   border-radius: 6px;
   padding: 7px 3px;
-  background: #eef2ec;
-  color: #496251;
+  background: #f3f6f3;
+  color: #496354;
   font-size: 9px;
 }
 .manage svg {
   width: 11px;
 }
 .manage .delete {
-  background: #f4e8e4;
+  background: #faf0ed;
   color: #945f50;
 }
 .lab-occasions {
@@ -516,9 +537,9 @@ p {
   gap: 25px;
   padding: 25px;
   margin-top: 19px;
-  border: 1px solid #dce2d9;
+  border: 1px solid #e1e5e0;
   border-radius: 17px;
-  background: #fafbf8;
+  background: #fff;
 }
 .pick-grid {
   display: grid;
@@ -534,7 +555,7 @@ p {
   gap: 6px;
   min-height: 47px;
   padding: 6px;
-  border: 1px solid #d8ded5;
+  border: 1px solid #e1e5e0;
   border-radius: 8px;
   background: #fff;
   color: #536457;
@@ -564,9 +585,9 @@ p {
   align-items: center;
   padding: 18px;
   margin-top: 13px;
-  border: 1px solid #dce2d9;
+  border: 1px solid #e1e5e0;
   border-radius: 14px;
-  background: #fbfbf9;
+  background: #fff;
 }
 .saved-card > span {
   font-size: 18px;
@@ -589,7 +610,7 @@ p {
   gap: 5px;
 }
 .feedback button {
-  border: 1px solid #d7ded5;
+  border: 1px solid #e0e5df;
   border-radius: 7px;
   padding: 8px;
   background: #fff;
@@ -597,8 +618,8 @@ p {
   font-size: 9px;
 }
 .feedback .selected {
-  border-color: #b4c7b6;
-  background: #e2eae0;
+  border-color: #bed0c0;
+  background: #f0f6f0;
   color: #345c48;
   font-weight: 700;
 }
@@ -609,7 +630,7 @@ p {
   display: grid;
   place-items: center;
   padding: 18px;
-  background: #192c2075;
+  background: #1f2c2445;
 }
 .image-picker,
 .editor {
@@ -619,7 +640,7 @@ p {
   overflow: auto;
   padding: 34px;
   border-radius: 18px;
-  background: #fcfcfa;
+  background: #fff;
 }
 .image-picker h2,
 .editor h2 {
@@ -642,7 +663,7 @@ p {
   min-width: 0;
   flex: 1;
   padding: 11px 13px;
-  border: 1px solid #d3ddd2;
+  border: 1px solid #dde4dc;
   border-radius: 8px;
   background: #fff;
   color: #243b2e;
@@ -658,9 +679,9 @@ p {
   gap: 4px 10px;
   align-items: center;
   padding: 15px;
-  border: 1px dashed #91ab98;
+  border: 1px dashed #b4c8b7;
   border-radius: 10px;
-  background: #f0f5ef;
+  background: #f7faf7;
   color: #345c48;
   cursor: text;
 }
@@ -702,9 +723,9 @@ p {
   gap: 7px;
   margin: 18px 0;
   padding: 11px;
-  border: 1px solid #aebfaf;
+  border: 1px solid #c4d2c5;
   border-radius: 8px;
-  background: #e6ede3;
+  background: #f0f6f0;
   color: #345c48;
   font-size: 11px;
   font-weight: 700;
@@ -723,7 +744,7 @@ p {
 .candidate-grid button {
   overflow: hidden;
   padding: 0;
-  border: 1px solid #d8dfd6;
+  border: 1px solid #e0e5df;
   border-radius: 9px;
   background: #fff;
   text-align: left;
@@ -733,7 +754,7 @@ p {
   width: 100%;
   height: 130px;
   object-fit: contain;
-  background: #f1f3ed;
+  background: #f7f8f6;
 }
 .candidate-grid span {
   display: block;
@@ -766,7 +787,7 @@ p {
   width: 100%;
   margin-top: 6px;
   padding: 10px;
-  border: 1px solid #d4ddd2;
+  border: 1px solid #dde4dc;
   border-radius: 7px;
   background: #fff;
   outline-color: #88a38b;
@@ -779,6 +800,167 @@ p {
 .editor .primary {
   width: 100%;
   margin-top: 19px;
+}
+.refine-profile {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 2px 8px;
+  width: 100%;
+  margin-top: 16px;
+  padding: 12px;
+  border: 1px solid #dfe8df;
+  border-radius: 9px;
+  background: #f7faf7;
+  color: #315947;
+  text-align: left;
+  font-size: 11px;
+  font-weight: 700;
+}
+.refine-profile svg {
+  grid-row: span 2;
+  width: 16px;
+}
+.refine-profile span {
+  color: #778878;
+  font-size: 9px;
+  font-weight: 500;
+}
+.profile-wizard {
+  position: relative;
+  width: min(720px, 100%);
+  max-height: 88vh;
+  overflow: auto;
+  padding: 34px;
+  border-radius: 18px;
+  background: #fff;
+}
+.profile-wizard h2 {
+  margin: 0 0 5px;
+  font-size: 25px;
+  letter-spacing: -1px;
+}
+.wizard-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: flex-start;
+}
+.wizard-head p {
+  margin: 0;
+  color: #6d796e;
+  font-size: 12px;
+}
+.step-count {
+  flex: 0 0 auto;
+  color: #728173;
+  font-size: 10px;
+  font-weight: 700;
+}
+.progress {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+  margin: 23px 0 27px;
+}
+.progress span {
+  height: 4px;
+  border-radius: 99px;
+  background: #e6ebe6;
+}
+.progress .active {
+  background: #4a7258;
+}
+.question-kicker {
+  margin: 0 0 8px;
+  color: #819082;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 1.25px;
+}
+.profile-question h3 {
+  margin: 0 0 18px;
+  color: #24352a;
+  font-size: 22px;
+  letter-spacing: -0.8px;
+}
+.profile-choices {
+  display: grid;
+  gap: 10px;
+}
+.profile-choices.three-up {
+  grid-template-columns: repeat(3, 1fr);
+}
+.profile-choices button,
+.direction-grid button {
+  display: flex;
+  min-height: 126px;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 18px;
+  border: 1px solid #e0e5df;
+  border-radius: 13px;
+  background: #fff;
+  color: #2f4235;
+  text-align: left;
+  transition: background 160ms ease, border-color 160ms ease, transform 160ms ease;
+}
+.profile-choices button:hover,
+.direction-grid button:hover:not(:disabled) {
+  border-color: #aec1b0;
+  transform: translateY(-1px);
+}
+.profile-choices button strong,
+.direction-grid button strong {
+  font-size: 14px;
+}
+.profile-choices button span,
+.direction-grid button span {
+  color: #708071;
+  font-size: 11px;
+  line-height: 1.45;
+}
+.profile-choices button.chosen,
+.direction-grid button.chosen {
+  border-color: #6f9278;
+  background: #f2f8f2;
+  box-shadow: inset 0 0 0 1px #6f9278;
+}
+.direction-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 9px;
+}
+.direction-grid button {
+  min-height: 92px;
+  padding: 13px;
+}
+.direction-grid button strong {
+  text-transform: capitalize;
+}
+.direction-grid button:disabled {
+  cursor: not-allowed;
+  opacity: 0.42;
+}
+.primary:hover {
+  background: #214432;
+}
+.secondary:hover:not(:disabled),
+.manage button:hover {
+  border-color: #b9c8ba;
+  background: #f7faf7;
+}
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid #8aa990;
+  outline-offset: 2px;
+}
+.wizard-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 27px;
 }
 @media (max-width: 820px) {
   .shell {
@@ -804,6 +986,9 @@ p {
   }
   .collection-actions {
     gap: 8px;
+  }
+  .review-profiles {
+    font-size: 10px;
   }
   .lab-card {
     grid-template-columns: 1fr;
@@ -887,7 +1072,16 @@ p {
     grid-template-columns: 1fr 1fr;
   }
   .image-picker,
-  .editor {
+  .editor,
+  .profile-wizard {
     padding: 28px 18px;
+  }
+  .profile-choices.three-up,
+  .direction-grid {
+    grid-template-columns: 1fr;
+  }
+  .profile-choices button,
+  .direction-grid button {
+    min-height: 78px;
   }
 }

@@ -45,4 +45,18 @@ class PairingEngineTests(unittest.TestCase):
         twin=fragrance(5,"Fresh twin",["aquatic","fresh"])
         self.assertIsNone(candidate(self.fresh,twin,"summer-day"))
 
+    def test_confirmed_profile_is_preferred_to_equally_supported_inferred_profile(self):
+        inferred_wood=fragrance(5,"Suggested wood",["woody","aromatic"],"inferred")
+        confirmed=candidate(self.fresh,self.wood,"summer-day")
+        suggested=candidate(self.fresh,inferred_wood,"summer-day")
+        self.assertGreater(confirmed["score"],suggested["score"])
+        self.assertEqual(confirmed["profile_state"],"confirmed")
+        self.assertEqual(suggested["profile_state"],"mixed")
+        self.assertIn("suggested",suggested["explanation"])
+
+    def test_profile_driven_occasion_variation_changes_score(self):
+        summer=candidate(self.fresh,self.wood,"summer-day")
+        winter=candidate(self.fresh,self.wood,"winter-evening")
+        self.assertNotEqual(summer["score"],winter["score"])
+
 if __name__ == "__main__": unittest.main()

@@ -28,6 +28,8 @@ type F = {
   brand: string;
   format: string;
   profile_confidence: string;
+  family_tags: string[];
+  character_tags: string[];
   is_favorite?: boolean;
   image_path?: string | null;
   notes?: string;
@@ -38,6 +40,7 @@ type Rec = {
   mode: string;
   explanation: string;
   recently_worn: boolean;
+  profile_state?: "confirmed" | "mixed" | "inferred";
 };
 type Combo = {
   id: number;
@@ -60,6 +63,67 @@ const occasions = [
   { id: "summer-day", label: "Summer day", Icon: Sun },
   { id: "winter-evening", label: "Winter evening", Icon: Snowflake },
 ];
+const directions = [
+  ["citrus", "Bright and sparkling"],
+  ["aquatic", "Watery and open"],
+  ["aromatic", "Herbal and polished"],
+  ["woody", "Dry and grounding"],
+  ["amber", "Golden and enveloping"],
+  ["gourmand", "Sweet and edible"],
+  ["musk", "Skinlike and smooth"],
+  ["spicy", "Warm and vivid"],
+  ["oud", "Resinous and deep"],
+  ["smoky", "Dark and textured"],
+  ["leather", "Supple and bold"],
+] as const;
+type Feel = "fresh" | "balanced" | "warm";
+type Presence = "soft" | "versatile" | "bold";
+type ProfileDraft = { feel: Feel; presence: Presence; directions: string[] };
+
+const profileState = (f: F) =>
+  f.profile_confidence === "user-confirmed"
+    ? "Confirmed profile"
+    : f.profile_confidence === "inferred"
+      ? "Suggested profile"
+      : "Profile needs review";
+
+function draftFrom(f: F): ProfileDraft {
+  const tags = new Set([...(f.family_tags || []), ...(f.character_tags || [])]);
+  const feel: Feel =
+    tags.has("fresh") || tags.has("aquatic") || tags.has("citrus")
+      ? "fresh"
+      : tags.has("warm") || tags.has("amber") || tags.has("gourmand")
+        ? "warm"
+        : "balanced";
+  const presence: Presence = tags.has("bold") || tags.has("dark")
+    ? "bold"
+    : tags.has("soft") || tags.has("musk")
+      ? "soft"
+      : "versatile";
+  return {
+    feel,
+    presence,
+    directions: directions.map(([id]) => id).filter((id) => tags.has(id)).slice(0, 2),
+  };
+}
+
+function profileTags(draft: ProfileDraft) {
+  const family = new Set(draft.directions);
+  const character = new Set<string>();
+  if (draft.feel === "fresh") {
+    character.add("fresh");
+    character.add("clean");
+  } else if (draft.feel === "balanced") {
+    character.add("clean");
+    family.add("aromatic");
+  } else {
+    character.add("warm");
+    family.add("amber");
+  }
+  if (draft.presence === "soft") character.add("soft");
+  if (draft.presence === "bold") character.add("bold");
+  return { family_tags: [...family], character_tags: [...character] };
+}
 function Bottle({ f, big = false }: { f: F; big?: boolean }) {
   const i = f.name
     .split(" ")
@@ -158,6 +222,9 @@ function Pair({
         <small>
           {r.mode}
           {r.recently_worn ? " · worn recently" : ""}
+          {r.profile_state === "confirmed" ? " · confirmed profiles" : ""}
+          {r.profile_state === "mixed" ? " · one profile suggested" : ""}
+          {r.profile_state === "inferred" ? " · suggested profiles" : ""}
         </small>
         <h2>
           {r.main.name} with {r.pair.name}
@@ -192,7 +259,14 @@ export default function App() {
     [loading, setLoading] = useState(false),
     [imageError, setImageError] = useState(""),
     [editor, setEditor] = useState<F | null>(null),
-    [adding, setAdding] = useState(false);
+    [adding, setAdding] = useState(false),
+    [profileFor, setProfileFor] = useState<F | null>(null),
+    [profileStep, setProfileStep] = useState<1 | 2 | 3>(1),
+    [profileDraft, setProfileDraft] = useState<ProfileDraft>({
+      feel: "balanced",
+      presence: "versatile",
+      directions: [],
+    });
   const load = async () => {
     setItems(await (await fetch(`${api}/fragrances`)).json());
     setCombos(await (await fetch(`${api}/combinations`)).json());
@@ -365,7 +439,7 @@ export default function App() {
       format: d.get("format"),
       notes: d.get("notes"),
     };
-    await fetch(
+    const response = await fetch(
       editor ? `${api}/fragrances/${editor.id}` : `${api}/fragrances`,
       {
         method: editor ? "PATCH" : "POST",
@@ -373,9 +447,43 @@ export default function App() {
         body: JSON.stringify(body),
       },
     );
+    if (!response.ok) return;
+    const saved = (await response.json()) as F;
+    setItems((current) =>
+      editor
+        ? current.map((item) => (item.id === saved.id ? saved : item))
+        : [...current, saved],
+    );
     setEditor(null);
     setAdding(false);
-    load();
+    if (!editor) {
+      setProfileFor(saved);
+      setProfileDraft(draftFrom(saved));
+      setProfileStep(1);
+    }
+    void load().catch(() => {});
+  };
+  const openProfile = (f: F) => {
+    setProfileFor(f);
+    setProfileDraft(draftFrom(f));
+    setProfileStep(1);
+  };
+  const saveProfile = async () => {
+    if (!profileFor) return;
+    const r = await fetch(`${api}/fragrances/${profileFor.id}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        ...profileTags(profileDraft),
+        profile_confidence: "user-confirmed",
+      }),
+    });
+    if (!r.ok) return;
+    const saved = (await r.json()) as F;
+    setItems((current) => current.map((f) => (f.id === saved.id ? saved : f)));
+    setProfileFor(null);
+    void load().catch(() => {});
+    void getRows().catch(() => {});
   };
   const shown = useMemo(
     () =>
@@ -395,6 +503,9 @@ export default function App() {
     return [...rows.slice(offset), ...rows.slice(0, offset)];
   }, [rows, occasion]);
   const dailyPick = todayRows[0]?.main ?? suggestions[0];
+  const profilesToReview = items.filter(
+    (f) => f.profile_confidence !== "user-confirmed",
+  );
   return (
     <main>
       <div className="shell">
@@ -484,6 +595,15 @@ export default function App() {
                     onChange={(e) => setSearch(e.target.value)}
                   />
                 </label>
+                {profilesToReview.length > 0 && (
+                  <button
+                    className="secondary review-profiles"
+                    onClick={() => openProfile(profilesToReview[0])}
+                  >
+                    <Sparkles />
+                    Complete profiles ({profilesToReview.length})
+                  </button>
+                )}
                 <button className="primary" onClick={() => setAdding(true)}>
                   <Plus />
                   Add perfume
@@ -498,6 +618,10 @@ export default function App() {
                     <p>{f.brand}</p>
                     <h2>{f.name}</h2>
                     <span>{f.format === "attar" ? "Attar" : "Spray"}</span>
+                    <button className="profile-link" onClick={() => openProfile(f)}>
+                      <Sparkles />
+                      {profileState(f)}
+                    </button>
                   </div>
                   <div className="manage">
                     <button onClick={() => openPhoto(f)}>
@@ -754,8 +878,148 @@ export default function App() {
               Notes
               <textarea name="notes" defaultValue={editor?.notes} />
             </label>
+            {editor && (
+              <button
+                className="refine-profile"
+                type="button"
+                onClick={() => {
+                  const current = editor;
+                  setEditor(null);
+                  openProfile(current);
+                }}
+              >
+                <Sparkles />
+                Refine scent profile
+                <span>{profileState(editor)}</span>
+              </button>
+            )}
             <button className="primary">Save perfume</button>
           </form>
+        </div>
+      )}
+      {profileFor && (
+        <div className="scrim">
+          <section className="profile-wizard" aria-modal="true" role="dialog">
+            <button className="x" onClick={() => setProfileFor(null)}>
+              <X />
+            </button>
+            <p className="eyebrow">REFINE PROFILE</p>
+            <div className="wizard-head">
+              <div>
+                <h2>{profileFor.name}</h2>
+                <p>
+                  {profileFor.profile_confidence === "user-confirmed"
+                    ? "Tune your confirmed scent profile."
+                    : "Turn this suggested profile into one you trust."}
+                </p>
+              </div>
+              <span className="step-count">{profileStep} of 3</span>
+            </div>
+            <div className="progress" aria-label={`Step ${profileStep} of 3`}>
+              {[1, 2, 3].map((step) => (
+                <span key={step} className={step <= profileStep ? "active" : ""} />
+              ))}
+            </div>
+            {profileStep === 1 && (
+              <div className="profile-question">
+                <p className="question-kicker">STEP 1 · OVERALL FEEL</p>
+                <h3>How does it feel when you wear it?</h3>
+                <div className="profile-choices three-up">
+                  {[
+                    ["fresh", "Fresh & airy", "Light, crisp, and open."],
+                    ["balanced", "Balanced & clean", "Easy, polished, and versatile."],
+                    ["warm", "Warm & rich", "Deep, cosy, and enveloping."],
+                  ].map(([id, label, copy]) => (
+                    <button
+                      key={id}
+                      className={profileDraft.feel === id ? "chosen" : ""}
+                      onClick={() => setProfileDraft((d) => ({ ...d, feel: id as Feel }))}
+                    >
+                      <strong>{label}</strong>
+                      <span>{copy}</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+            {profileStep === 2 && (
+              <div className="profile-question">
+                <p className="question-kicker">STEP 2 · PRESENCE</p>
+                <h3>How much presence does it have?</h3>
+                <div className="profile-choices three-up">
+                  {[
+                    ["soft", "Soft", "Close to the skin."],
+                    ["versatile", "Versatile", "Comfortable in most rooms."],
+                    ["bold", "Bold", "Noticeable and expressive."],
+                  ].map(([id, label, copy]) => (
+                    <button
+                      key={id}
+                      className={profileDraft.presence === id ? "chosen" : ""}
+                      onClick={() => setProfileDraft((d) => ({ ...d, presence: id as Presence }))}
+                    >
+                      <strong>{label}</strong>
+                      <span>{copy}</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+            {profileStep === 3 && (
+              <div className="profile-question">
+                <p className="question-kicker">STEP 3 · SCENT DIRECTIONS</p>
+                <h3>Pick up to two directions you notice.</h3>
+                <div className="direction-grid">
+                  {directions.map(([id, copy]) => {
+                    const selected = profileDraft.directions.includes(id);
+                    const limited = !selected && profileDraft.directions.length >= 2;
+                    return (
+                      <button
+                        key={id}
+                        className={selected ? "chosen" : ""}
+                        disabled={limited}
+                        onClick={() =>
+                          setProfileDraft((d) => ({
+                            ...d,
+                            directions: selected
+                              ? d.directions.filter((direction) => direction !== id)
+                              : [...d.directions, id],
+                          }))
+                        }
+                      >
+                        <strong>{id}</strong>
+                        <span>{copy}</span>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+            <div className="wizard-actions">
+              {profileStep > 1 ? (
+                <button
+                  className="secondary"
+                  onClick={() => setProfileStep((step) => (step - 1) as 1 | 2 | 3)}
+                >
+                  Back
+                </button>
+              ) : (
+                <span />
+              )}
+              {profileStep < 3 ? (
+                <button
+                  className="primary"
+                  onClick={() => setProfileStep((step) => (step + 1) as 1 | 2 | 3)}
+                >
+                  Continue
+                </button>
+              ) : (
+                <button className="primary" onClick={saveProfile}>
+                  <Check />
+                  Save confirmed profile
+                </button>
+              )}
+            </div>
+          </section>
         </div>
       )}
     </main>
